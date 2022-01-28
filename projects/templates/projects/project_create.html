@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load tailwind_filters %}
+{% block content %}
+<section class="text-gray-600 body-font overflow-hidden">
+  <div class="flex justify-center px-5 py-24 mx-auto">
+    <form method="post" class="p-10 shadow-xl rounded-lg">
+  {% csrf_token %} {{ form | crispy }}
+  <div class="flex justify-center">
+    <input type="submit" value="Save"  class="bg-green-400 text-white px-4 py-2 rounded-lg hover:bg-green-500" />
+  </div>
+</div>
+</form>
+</div>
+</section>
+{% endblock content %}

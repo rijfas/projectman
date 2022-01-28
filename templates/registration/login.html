@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load tailwind_filters %}
+
+{% block content %}
+<section class="text-gray-600 body-font overflow-hidden">
+  <div class="flex justify-center px-5 py-24 mx-auto">
+    <form method="post" class="p-10 shadow-xl rounded-lg">
+      <div class="flex">
+        <h1 class="font-bold text-lg mb-10 pr-5 border-b-4 pb-2 border-green-400">Login</h1>
+      </div>
+      {% csrf_token %} {{ form | crispy }}
+      <div class="flex justify-center mt-10">
+      <input type="submit" value="Login" class="bg-green-400 text-white px-4 py-2 rounded-lg hover:bg-green-500" />
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock content %}

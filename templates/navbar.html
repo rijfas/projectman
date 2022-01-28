@@ -1,0 +1,36 @@
+<header class="text-gray-600 body-font">
+  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+    <a href="{% url 'landing' %}" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white p-2 bg-green-500 rounded-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+      </svg>
+      <span class="ml-3 text-xl">ProjectMan</span>
+    </a>
+    <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+      {% if user.is_manager %}
+      <a class="mr-5 hover:text-gray-900 {% if '/employees/' in request.path  %}text-green-500 font-bold{% endif %}" href="{% url 'employees:list' %}">
+        Employees
+      </a>
+      <a class="mr-5 hover:text-gray-900 {% if '/projects/' in request.path %}text-green-500 font-bold{% endif %}" href="{% url 'projects:list' %}">
+        Projects
+      </a>
+      {% endif %}
+    </nav>
+    {% if user.is_authenticated %}
+    <span class="mr-5">Logged in as : {{ user }}</span>
+    <a href="{% url 'logout' %}" class="inline-flex items-center bg-red-400 border-0 py-1 px-3 focus:outline-none hover:bg-red-500 rounded text-base text-white mt-4 md:mt-0">
+      Logout
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5l7 7-7 7"></path>
+      </svg>
+    </a>
+    {% else %}
+    <a href="{% url 'login' %}" class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+      Login
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5l7 7-7 7"></path>
+      </svg>
+    </a>
+    {% endif %}
+  </div>
+</header>
