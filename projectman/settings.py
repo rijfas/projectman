@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_tailwind',
     'projects',
     'employees',
+    'attendance',
 ]
 
 MIDDLEWARE = [

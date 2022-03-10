@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load tailwind_filters %}
+
+{% block content %}
+<section class="text-gray-600 body-font overflow-hidden">
+  <div class="flex justify-center px-5 py-24 mx-auto">
+    <form method="post" class="p-10 shadow-xl rounded-lg">
+      <div class="flex">
+        <h1 class="capitalize font-bold text-lg mb-10 pr-5 border-b-4 pb-2 border-green-400">Delete employee {{ attendance }}?</h1>
+      </div>
+      <p class="text-red-500 font-bold">This action cannot be undone!</p>
+      {% csrf_token %} {{ form | crispy }}
+      <div class="flex justify-between items-center mt-10">
+        <div>
+          <a href="{% url 'attendance:list' %}" class="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500">
+            <span class="ml-2">Cancell</span>
+          </a>
+        </div>
+        <input type="submit" value="Confirm" class="bg-green-400 text-white px-4 py-2 rounded-lg hover:bg-green-500" />
+        </div>
+      </form>
+    </div>
+    </section>
+{% endblock content %}
