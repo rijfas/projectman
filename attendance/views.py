@@ -2,8 +2,10 @@ from django.shortcuts import redirect, render
 
 from attendance.models import Attendance
 from .forms import CreateAttendanceForm
+from employees.decorators import manager_login_required
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
+@manager_login_required
 def create_attendance(request):
     form = CreateAttendanceForm()
     if request.POST:
@@ -15,6 +17,7 @@ def create_attendance(request):
             return redirect('attendance:list')
     return render(request, 'attendance/create.html', {'form': form})
 
+@login_required
 def list_attendance(request):
     if request.user.is_manager:
         attendances = Attendance.objects.filter(manager=request.user)
@@ -23,7 +26,7 @@ def list_attendance(request):
     print(Attendance.objects.all())
     return render(request, 'attendance/list.html', {'attendances': attendances})
 
-
+@manager_login_required
 def delete_attendance(request, pk):
     attendance = Attendance.objects.get(id=pk)
     if request.method == 'POST':
@@ -32,6 +35,7 @@ def delete_attendance(request, pk):
     context = {'attendance': attendance}
     return render(request, 'attendance/delete.html', context=context)
 
+@login_required
 def mark_attendance(request, id):
     attendance = Attendance.objects.get(id=id)
     attendance.marked = True

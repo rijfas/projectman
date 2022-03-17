@@ -15,7 +15,10 @@
         <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">{{ projects }}</h1>
         {% endif %}
           {% if user.is_employee %}
-            <a href="{% url 'attendance:list' %}" class="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Attendances</a>
+            <div class="flex">
+              <a href="{% url 'attendance:list' %}" class="mr-5 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Attendances</a>
+            <a href="{% url 'meetings:list' %}" class="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Meetings</a>
+            </div>
           {% endif %}
       </div>
     </div>

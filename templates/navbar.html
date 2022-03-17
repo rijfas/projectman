@@ -17,6 +17,9 @@
       <a class="mr-5 hover:text-gray-900 {% if '/attendance/' in request.path %}text-green-500 font-bold{% endif %}" href="{% url 'attendance:list' %}">
         Attendance
       </a>
+      <a class="mr-5 hover:text-gray-900 {% if '/meetings/' in request.path %}text-green-500 font-bold{% endif %}" href="{% url 'meetings:list' %}">
+        Meetings
+      </a>
       {% endif %}
     </nav>
     {% if user.is_authenticated %}
