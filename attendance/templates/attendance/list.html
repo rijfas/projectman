@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="text-gray-600 body-font">
+    <div class="container px-5 pt-24 mx-auto">
+      <div class="flex flex-col text-center w-full mb-20 pb-5 border-b-2">
+        <div class="w-full justify-start">
+          <h2 class="flex text-xs text-green-500 tracking-widest font-medium title-font mb-1">{{ user}}'s Employees</h2>
+        </div>
+        <div class="flex justify-between justify-items-center">
+          <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">Manage Attendance</h1>
+          {% if user.is_manager %}
+            <a href="{% url 'attendance:create' %}" class="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Mark Attendance</a>
+          {% endif %}
+          {% if user.is_employee %}
+            <a href="{% url 'projects:list' %}" class="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Back</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+      <div class="container px-5  mx-auto flex flex-wrap ">
+        <div class="overflow-x-auto  min-w-full">
+            <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
+                <div class="overflow-hidden shadow-md sm:rounded-lg">
+                    <table class="min-w-full">
+                        <thead class="bg-gray-50 dark:bg-gray-700">
+                            <tr>
+                                <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-center text-gray-700 uppercase dark:text-gray-400">
+                                    Name
+                                </th>
+                                </th>
+                                <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-center text-gray-700 uppercase dark:text-gray-400">
+                                    Date
+                                </th>
+                                <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-center text-gray-700 uppercase dark:text-gray-400">
+                                    Status
+                                </th>
+                                {% if user.is_manager %}
+                                <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-center text-gray-700 uppercase dark:text-gray-400">
+                                    Delete
+                                </th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for attendance in attendances %}
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 text-center whitespace-nowrap dark:text-white">
+                                            {{ attendance.employee }}
+                                        </td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap text-center dark:text-gray-400">
+                                            {{ attendance.date }}
+                                        </td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap flex justify-center dark:text-gray-400">
+                                            {% if user.is_employee%}
+                                                {% if attendance.marked %}
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 " fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                {% else %}
+                                                <a href="{% url 'attendance:mark' attendance.id %}">Mark</a>
+                                                {% endif %}
+                                            {% else %}
+                                              {% if attendance.marked %}
+                                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 " fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                  </svg>
+                                              {% else %}
+                                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                  </svg>
+                                              {% endif %}
+                                            {% endif %}
+                                        </td>
+                                        {% if user.is_manager %}
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap text-center text-green-500 dark:text-gray-400">
+                                            <a href="{% url 'attendance:delete' attendance.id %}">Delete</a>
+                                        </td>
+                                        {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+      </div>
+  </section>
+{% endblock content %}
+
+
